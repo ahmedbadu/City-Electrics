@@ -1,0 +1,169 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+
+    <li class="nav-item nav-profile">
+      <a href="#" class="nav-link">
+        <div class="nav-profile-image">
+          <img src="/images/user_images/{{ userInfo.profile }}" alt="profile">
+          <span class="login-status online"></span>
+          <!--change to offline or busy as needed-->
+        </div>
+        <div class="nav-profile-text d-flex flex-column">
+          <span class="font-weight-bold mb-2">{{ userInfo.first_name }} {{ userInfo.last_name }}</span>
+          <span class="text-secondary text-small">{{ userInfo.user_type }}</span>
+        </div>
+        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+      </a>
+    </li>
+
+    {% if userInfo.user_type == 'super admin' %}
+
+    <li class="nav-item">
+      <a class="nav-link" href="/superAdmin/dashboard">
+        <span class="menu-title">Dashboard</span>
+        <i class="mdi mdi-home menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Branch</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/superAdmin/state">Manage State</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/superAdmin/city">Manage City</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/superAdmin/branch">Manage Branch</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/superAdmin/admin">
+        <span class="menu-title">Manage Admins</span>
+        <i class="mdi mdi-account-circle menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Employee</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic1">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/superAdmin/employee">Manage Employee</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/superAdmin/salary">Manage Salary</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/superAdmin/leaves">Manage Leaves</a></li>
+        </ul>
+      </div>
+    </li>
+
+    {% elif userInfo.user_type == 'admin' %}
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/dashboard">
+        <span class="menu-title">Dashboard</span>
+        <i class="mdi mdi-home menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Employee</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/employee">Manage Employee</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/salary">Manage Salary</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/leaves">Manage Leaves</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/category">
+        <span class="menu-title">Manage Category</span>
+        <i class="mdi mdi-filter-variant menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/product">
+        <span class="menu-title">Manage Products</span>
+        <i class="mdi mdi-format-paragraph menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic1" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Supplier & Customer</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-account-switch menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic1">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/supplier">Manage Supplier</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/customer">Manage Customer</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/purchase">
+        <span class="menu-title">Manage Purchase</span>
+        <i class="mdi mdi-sort-descending menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/sales">
+        <span class="menu-title">Manage Sales</span>
+        <i class="mdi mdi-sort-ascending menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Report</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-account-switch menu-icon"></i>
+      </a>
+      <div class="collapse" id="ui-basic2">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="/admin/salesReport">Sales Report</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/salaryReport">Salary Report</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/admin/stockReport">Stock Report</a></li>
+        </ul>
+      </div>
+    </li>
+    
+
+    {% elif userInfo.user_type == 'employee' %}
+    <li class="nav-item">
+      <a class="nav-link" href="/employee/dashboard">
+        <span class="menu-title">Dashboard</span>
+        <i class="mdi mdi-home menu-icon"></i>
+      </a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link" href="/employee/leaves">
+        <span class="menu-title">Apply Leaves</span>
+        <i class="mdi mdi-tab menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/employee/salary">
+        <span class="menu-title">View All Salary</span>
+        <i class="mdi mdi-coin menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/employee/pendingOrders">
+        <span class="menu-title">View All Pending Orders</span>
+        <i class="mdi mdi-alert-circle-outline menu-icon"></i>
+      </a>
+    </li>
+
+    {% endif %}
+
+
+  </ul>
+</nav>

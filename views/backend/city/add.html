@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>CITY ELECTRICS || SUPER ADMIN PANEL</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="/others/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <script src="/jquery-validation/lib/jquery.js"></script>
+        <script src="/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="/jquery-validation/dist/additional-methods.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#btnSaveCity').click(function(e){
+                    e.preventDefault();
+                    var cityName = $('#cityName').val();
+                    var stateId = $('#selectState').val();
+                    if(stateId != '' && cityName != ''){
+                        $.post('/superAdmin/addCity',{
+                            stateId,
+                            cityName,
+                        },function(result){
+                            alert(result);
+                            $('#cityName').val();
+                            $('#selectState').val();
+                            document.location = "/superAdmin/city";
+                        });
+                    }
+                    else{
+                        if(stateId == ''){
+                            $('#selectState').focus();
+                        }
+                        else{
+                            $('#cityName').focus();
+                        }
+                    }
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:../../partials/_navbar.html -->
+            {% include "partials/_navbar.njk" %}
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:../../partials/_sidebar.html -->
+                {% include "partials/_sidebar.njk" %}
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="page-header">
+                            <h3 class="page-title"> Add City</h3>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="" style="color: #323039;text-decoration: none;">Branch</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage City</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Add City</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">City Form</h4>
+                                        <p class="card-description"> Create a new City.</p>
+                                        <form
+                                            id="stateForm"
+                                            class="forms-sample"
+                                            action=""
+                                            method="post"
+                                        >
+                                            <div class="form-group">
+                                                <label for="selectState">Select State:</label>
+                                                <select
+                                                    name="selectState"
+                                                    id="selectState"
+                                                    class="form-control"
+                                                    style="padding: 16px 25px 16px 25px;"
+                                                    required
+                                                >
+                                                    <option value="">Choose State</option>
+                                                    {% for state in stateInfo %}
+                                                    <option value="{{ state._id }}">{{ state.state_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cityName">City Name: (State wise)</label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="cityName"
+                                                    name="cityName"
+                                                    placeholder="Enter City Name ex. ahmedabad,mumbai"
+                                                    required
+                                                >
+                                            </div>
+                                            <button type="submit" id="btnSaveCity" class="btn btn-gradient-primary me-2">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:../../partials/_footer.html -->
+                    {% include "partials/_footer.njk" %}
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="/others/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="/others/js/off-canvas.js"></script>
+        <script src="/others/js/hoverable-collapse.js"></script>
+        <script src="/others/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <!-- End custom js for this page -->
+    </body>
+</html>

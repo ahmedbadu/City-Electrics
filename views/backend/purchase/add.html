@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>CITY ELECTRICS || SUPER ADMIN PANEL</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="/others/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <style>
+            #moreProducts{
+                display: block;
+                margin-bottom: 14px;
+                cursor: pointer;
+                font-size: 12px;
+            }
+            .btn-delete{
+                flex-direction: column;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:../../partials/_navbar.html -->
+            {% include "partials/_navbar.njk" %}
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:../../partials/_sidebar.html -->
+                {% include "partials/_sidebar.njk" %}
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="page-header">
+                            <h3 class="page-title"> Add Purchase</h3>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="" style="color: #323039;text-decoration: none;">Purchase</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage Purchase</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Add Purchase</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Purchase Form</h4>
+                                        <p class="card-description"> Create a new Purchase.</p>
+                                        <form
+                                            id="supplierForm"
+                                            class="forms-sample"
+                                            action="/admin/purchase/savePurchase"
+                                            method="post"
+                                        >
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="selectSupplier">Select Supplier</label>
+                                                        <select
+                                                            name="selectSupplier"
+                                                            id="selectSupplier"
+                                                            class="form-control"
+                                                            style="padding: 18px 25px 18px 25px;"
+                                                            required
+                                                        >
+                                                            <option value="">Select Supplier</option>
+                                                            {% for supplier in supplierInfo %}
+                                                            <option value="{{ supplier._id }}">{{ supplier.supplier_name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="date">Select Date</label>
+                                                        <input
+                                                            type="date"
+                                                            name="date"
+                                                            id="date"
+                                                            class="form-control"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-divide">
+                                                <center>
+                                                    &minus;&minus;&minus;
+                                                    <label>Purchase Information</label>
+                                                    &minus;&minus;&minus;
+                                                </center>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="selectCategory">Select Category</label>
+                                                        <select
+                                                            name="selectCategory[]"
+                                                            id="selectCategory"
+                                                            class="form-control"
+                                                            style="padding: 18px 25px 18px 25px;"
+                                                            onchange="getProducts('selectCategory','selectProduct');"
+                                                            required
+                                                        >
+                                                            <option value="">Select Category</option>
+                                                            {% for category in categoryInfo %}
+                                                            <option value="{{ category._id }}">{{ category.category_name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="selectProduct">Select Product</label>
+                                                        <select
+                                                            name="selectProduct[]"
+                                                            id="selectProduct"
+                                                            class="form-control"
+                                                            style="padding: 18px 25px 18px 25px;"
+                                                            required
+                                                        >
+                                                            <option value="">Select Product</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="price">Price</label>
+                                                        <input
+                                                            type="number"
+                                                            name="price[]"
+                                                            class="form-control"
+                                                            id="price"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="quantity">Quantity</label>
+                                                        <input
+                                                            type="number"
+                                                            name="quantity[]"
+                                                            id="quantity"
+                                                            class="form-control"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="extra_products"></div>
+                                            <label id="moreProducts">Add More Products...</label>
+                                            <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:../../partials/_footer.html -->
+                    {% include "partials/_footer.njk" %}
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="/others/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="/others/js/off-canvas.js"></script>
+        <script src="/others/js/hoverable-collapse.js"></script>
+        <script src="/others/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <!-- End custom js for this page -->
+        <script src="/jquery-validation/lib/jquery.js"></script>
+        <script src="/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="/jquery-validation/dist/additional-methods.js"></script>
+        <script>
+            var counter = 0;
+            $(document).ready(function(){
+                $('#supplierForm').validate({
+                    messages:{
+                        selectCategory:{
+                            required:'* Category is required',
+                        },
+                    }
+                });
+
+                $('#moreProducts').click(function(){
+                    counter = counter+1;
+                    var productForm = `
+                    <div id="block_${counter}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="selectCategory">Select Category</label>
+                                    <select
+                                        name="selectCategory[]"
+                                        id="selectCategory${counter}"
+                                        class="form-control"
+                                        style="padding: 18px 25px 18px 25px;"
+                                        onchange="getProducts('selectCategory${counter}','selectProduct${counter}');"
+                                        required
+                                    >
+                                        <option value="">Select Category</option>
+                                        {% for category in categoryInfo %}
+                                        <option value="{{ category._id }}">{{ category.category_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="selectProduct">Select Product</label>
+                                    <select
+                                        name="selectProduct[]"
+                                        id="selectProduct${counter}"
+                                        class="form-control"
+                                        style="padding: 18px 25px 18px 25px;"
+                                        required
+                                    >
+                                        <option value="">Select Product</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="price">Price</label>
+                                    <input
+                                        type="number"
+                                        name="price[]"
+                                        class="form-control"
+                                        id="price"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input
+                                        type="number"
+                                        name="quantity[]"
+                                        id="quantity"
+                                        class="form-control"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <center><button type="button" onclick="deleteProduct('block_${counter}');" class="btn btn-gradient-danger btn-rounded btn-icon" style="margin-top: 20px;"><i class="mdi mdi-delete"></i></button></center>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    $('.extra_products').append(productForm);
+                });
+
+            });
+
+            function getProducts(cat_id,pro_id){
+                var value = $(`#${cat_id}`).val();
+                $.get('/admin/product/getProducts',{
+                    category_id: value,
+                },function(result){
+                    $(`#${pro_id}`).html('');
+                    for(let i=0;i<result.length;i++){
+                        $(`#${pro_id}`).append(`<option value="${result[i]._id}">${result[i].product_name}</option>`);
+                    }
+                });
+            }
+
+            function deleteProduct(id){
+                $(`#${id}`).remove();
+            }
+        </script>
+    </body>
+</html>

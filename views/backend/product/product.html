@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>CITY ELECTRICS || {{ userInfo.user_type }} PANEL</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="/others/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <link href="/DataTables/datatables.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <style>
+            .leave_status{
+                padding: 6px 10px 6px 10px;
+                color: white;
+                font-weight: bolder;
+                border-radius: 10px;
+                font-size: 13px;
+            }
+        </style>
+        <script>
+            $(document).ready(function(){
+                let table = new DataTable('#productTable');
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:../../partials/_navbar.html -->
+            {% include "partials/_navbar.njk" %}
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:../../partials/_sidebar.html -->
+                {% include "partials/_sidebar.njk" %}
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="page-header">
+                            <h3 class="page-title"> Manage Products</h3>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="" style="color: #323039;text-decoration: none;">Products</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage Products</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <!-- Table starts -->
+                        <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                                <div class="card" style="overflow: auto;">
+                                    <div class="card-body">
+                                        <a href="/admin/product/add">
+                                            <button type="button" style="margin-bottom: 10px;" class="btn btn-outline-success btn-fw">Add Product</button>
+                                        </a>
+                                        <table id="productTable" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th> #</th>
+                                                    <th> Category Name</th>
+                                                    <th> Product Name</th>
+                                                    <th> Price</th>
+                                                    <th> Description</th>
+                                                    <th> Product Image</th>
+                                                    <th> Edit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for product in productInfo %}
+                                                <tr>
+                                                    <td> {{ loop.index }}</td>
+                                                    <td> {{ product.category_id.category_name }}</td>
+                                                    <td> {{ product.product_name }}</td>
+                                                    <td> {{ product.price }}</td>
+                                                    <td> <pre>{{ product.description }}</pre></td>
+                                                    <td> <img src="{{ product.product_image }}"> </td>
+                                                    <td>
+                                                        <a href="/admin/product/edit/{{ product._id }}">
+                                                            <button type="button" class="btn btn-gradient-info btn-rounded btn-icon">
+                                                                <span class="mdi mdi-tooltip-edit"></span>
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <script src="/DataTables/datatables.min.js"></script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- table ends -->
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:../../partials/_footer.html -->
+                    {% include "partials/_footer.njk" %}
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="/others/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="/others/js/off-canvas.js"></script>
+        <script src="/others/js/hoverable-collapse.js"></script>
+        <script src="/others/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <!-- End custom js for this page -->
+    </body>
+</html>

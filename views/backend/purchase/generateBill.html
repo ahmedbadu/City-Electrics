@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>CITY ELECTRICS || {{ userInfo.user_type }} PANEL</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="/others/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <link href="/DataTables/datatables.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:../../partials/_navbar.html -->
+            {% include "partials/_navbar.njk" %}
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:../../partials/_sidebar.html -->
+                {% include "partials/_sidebar.njk" %}
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <button class="btn btn-gradient-info my-4" id="download-button">Download</button>
+                        <!-- Table starts -->
+                        <div class="row">
+                            <div class="col-lg-12 grid-margin stretch-card">
+                                <div class="card" id="PurchaseInvoice" style="overflow: auto;">
+                                    <div class="card-header">
+                                        <div class="text-center my-2">
+                                            <h2 class="display-5 fw-bold">Purchase Invoice</h2>
+                                            <p class="m-0">Invoice No: 12345</p>
+                                            <p class="m-0">Invoice Date: {{ purchaseInfo.date }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <section id="invoice">
+                                            <div class="container">
+                                                <div class="d-md-flex justify-content-between">
+                                                    <div>
+                                                        <p class="text-primary">Invoice To</p>
+                                                        <h4>{{ userInfo.first_name }} {{ userInfo.last_name }}</h4>
+                                                        <ul class="list-unstyled">
+                                                            <li>CITY ELECTRICS</li>
+                                                            <li>{{ userInfo.email }}</li>
+                                                            <li>+91 {{ userInfo.phone }}</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="mt-5 mt-md-0">
+                                                        <p class="text-primary">Invoice From</p>
+                                                        <h4>{{ purchaseInfo.supplier_id.supplier_name }}</h4>
+                                                        <ul class="list-unstyled">
+                                                            <li>ABC Company</li>
+                                                            <li>{{ purchaseInfo.supplier_id.email }}</li>
+                                                            <li>+91 {{ purchaseInfo.supplier_id.phone }}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <table class="table border my-4">
+                                                    <thead>
+                                                        <tr class="bg-gradient-primary">
+                                                            <th scope="col">No.</th>
+                                                            <th scope="col">Description</th>
+                                                            <th scope="col">Price</th>
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for purchaseDetails in purchaseInfoDetails %}
+                                                        <tr>
+                                                            <th scope="row">{{ loop.index }}</th>
+                                                            <td>{{ purchaseDetails.product_id.product_name }}</td>
+                                                            <td>Rs. {{ purchaseDetails.price }}</td>
+                                                            <td>{{ purchaseDetails.quantity }}</td>
+                                                            <td>Rs. {{ purchaseDetails.total_price }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        <!-- <tr>
+                                                            <th></th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="">Sub-Total</td>
+                                                            <td>Rs. {{ subTotal }}</td>
+                                                        </tr> -->
+                                                        <!-- <tr>
+                                                            <th></th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="">TAX 20%</td>
+                                                            <td>$470.00</td>
+                                                        </tr> -->
+                                                        <tr>
+                                                            <th></th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td class="text-primary fw-bold">Grand-Total</td>
+                                                            <td class="text-primary fw-bold">Rs. {{ subTotal }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- table ends -->
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:../../partials/_footer.html -->
+                    {% include "partials/_footer.njk" %}
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+
+        <script>
+            const button = document.getElementById('download-button');
+
+			function generatePDF() {
+				// Choose the element that your content will be rendered to.
+				const element = document.getElementById('PurchaseInvoice');
+				// Choose the element and save the PDF for your user.
+				html2pdf().from(element).save();
+			}
+
+			button.addEventListener('click', generatePDF);
+        </script>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        <script src="/others/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="/others/js/off-canvas.js"></script>
+        <script src="/others/js/hoverable-collapse.js"></script>
+        <script src="/others/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <!-- End custom js for this page -->
+    </body>
+</html>

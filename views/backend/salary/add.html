@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>CITY ELECTRICS || SUPER ADMIN PANEL</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="/others/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <style>
+            #profileImage{
+                width: 80px;
+                height: 80px;
+            }
+        </style>
+        <script>
+            function previewImage(event){
+                var input = event.target;
+                var image = document.getElementById('profileImage');
+                if(input.files && input.files[0]){
+                    var reader = new FileReader();
+                    reader.onload = function(e){
+                        $('#previewImage').css('display','block');
+                        image.src = e.target.result;
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:../../partials/_navbar.html -->
+            {% include "partials/_navbar.njk" %}
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:../../partials/_sidebar.html -->
+                {% include "partials/_sidebar.njk" %}
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="page-header">
+                            <h3 class="page-title"> Add Salary</h3>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="" style="color: #323039;text-decoration: none;">Employee</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage Salary</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Add Salary</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Salary Form</h4>
+                                        <p class="card-description"> Create a new Salary.</p>
+                                        <form
+                                            id="adminForm"
+                                            class="forms-sample"
+                                            action="/admin/salary/saveSalary"
+                                            method="post"
+                                        >
+                                            <div class="row">
+                                                <div class="col-xl-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="selectEmployee">Select Employee:</label>
+                                                        <select
+                                                            name="selectEmployee"
+                                                            id="selectEmployee"
+                                                            class="form-control"
+                                                            style="padding: 16px 25px 16px 25px;"
+                                                            required
+                                                        >
+                                                            <option value="">Select Employee</option>
+                                                            {% for employee in employeeInfo %}
+                                                            <option value="{{ employee._id }}">{{ employee.first_name }} {{ employee.last_name }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="lastName">Salary Date:</label>
+                                                        <input
+                                                            type="date"
+                                                            name="salaryDate"
+                                                            id="salaryDate"
+                                                            class="form-control"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="email">Salary Amount:</label>
+                                                        <input
+                                                            type="number"
+                                                            name="salaryAmount"
+                                                            id="salaryAmount"
+                                                            class="form-control"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" id="btnSaveCity" class="btn btn-gradient-primary me-2">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:../../partials/_footer.html -->
+                    {% include "partials/_footer.njk" %}
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="/others/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="/others/js/off-canvas.js"></script>
+        <script src="/others/js/hoverable-collapse.js"></script>
+        <script src="/others/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <!-- End custom js for this page -->
+        <script src="/jquery-validation/lib/jquery.js"></script>
+        <script src="/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="/jquery-validation/dist/additional-methods.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#adminForm').validate({
+                    messages:{
+                        salaryDate:{
+                            required: '* Salary Date is required',
+                        },
+                        salaryAmount:{
+                            required: '* Salary Amount is required',
+                        },
+                        selectEmployee:{
+                            required: '* Employee is required',
+                        },
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

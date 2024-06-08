@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>CITY ELECTRICS || SUPER ADMIN PANEL</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
+        <!-- endinject -->
+        <!-- Plugin css for this page -->
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <!-- endinject -->
+        <!-- Layout styles -->
+        <link rel="stylesheet" href="/others/css/style.css">
+        <!-- End layout styles -->
+        <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <script src="/jquery-validation/lib/jquery.js"></script>
+        <script src="/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="/jquery-validation/dist/additional-methods.js"></script>
+        <script>
+            function page_load(){
+                $('#selectState').val('{{ branchInfo.state_id }}');
+                var state_id = '{{ branchInfo.state_id }}';
+                $.get('/superAdmin/getCity',{
+                    state_id:state_id,
+                },function(result){
+                    for(let i=0;i<result.length;i++){
+                        $('#selectCity').append(`<option value='`+result[i]._id+`'>${result[i].city_name}</option>`);
+                    }
+                    $('#selectCity').val('{{ branchInfo.city_id }}');
+                });
+            }
+            $(document).ready(function(){
+                $('#selectState').change(function(){
+                    var state = $('#selectState').val();
+                    $.get('/superAdmin/branch/fetchCity',{
+                        state_id:state,
+                    },function(result){
+                        $('#selectCity').html('');
+                        for(let i=0;i<result.length;i++){
+                            $('#selectCity').append(`<option value='`+result[i]._id+`'>${result[i].city_name}</option>`);
+                        }
+                        
+                    });
+                })
+            });
+        </script>
+    </head>
+    <body onload="page_load();">
+        <div class="container-scroller">
+            <!-- partial:../../partials/_navbar.html -->
+            {% include "partials/_navbar.njk" %}
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:../../partials/_sidebar.html -->
+                {% include "partials/_sidebar.njk" %}
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="page-header">
+                            <h3 class="page-title"> Edit Branch</h3>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="" style="color: #323039;text-decoration: none;">Branch</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">Manage Branch</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Edit Branch</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Branch Form</h4>
+                                        <p class="card-description"> Create a new Branch.</p>
+                                        <form
+                                            id="branchForm"
+                                            class="forms-sample"
+                                            action="/superAdmin/branch/editBranch"
+                                            method="post"
+                                        >
+                                        <input type="hidden" value="{{ branchInfo._id }}" name="branch_id">
+                                            <div class="form-group">
+                                                <label for="selectState">Select State:</label>
+                                                <select
+                                                    name="selectState"
+                                                    id="selectState"
+                                                    class="form-control"
+                                                    style="padding: 16px 25px 16px 25px;"
+                                                    required
+                                                >
+                                                    <option value="">Choose State</option>
+                                                    {% for state in stateInfo %}
+                                                    <option value="{{ state._id }}">{{ state.state_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cityName">Select City:</label>
+                                                <select
+                                                    name="selectCity"
+                                                    id="selectCity"
+                                                    class="form-control"
+                                                    style="padding: 16px 25px 16px 25px;"
+                                                    required
+                                                >
+                                                    <option value="">Choose City</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address">Address:</label>
+                                                <textarea
+                                                    name="address"
+                                                    id="address"
+                                                    class="form-control"
+                                                    cols="30"
+                                                    rows="4"
+                                                    required
+                                                >{{ branchInfo.address }}</textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phone">Phone:</label>
+                                                <input
+                                                    type="number"
+                                                    name="phone"
+                                                    id="phone"
+                                                    class="form-control"
+                                                    value="{{ branchInfo.phone }}"
+                                                    required
+                                                >
+                                            </div>
+                                            <button type="submit" id="btnSaveCity" class="btn btn-gradient-primary me-2">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:../../partials/_footer.html -->
+                    {% include "partials/_footer.njk" %}
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="/others/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="/others/js/off-canvas.js"></script>
+        <script src="/others/js/hoverable-collapse.js"></script>
+        <script src="/others/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <!-- End custom js for this page -->
+    </body>
+</html>
