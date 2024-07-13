@@ -93,6 +93,17 @@ module.exports = function (models) {
         }
     }
 
+    module.profile = async function (req, res) {
+        try {
+            const userInfo = req.session.super_admin;
+            res.render('backend/auth/profile.html', {
+                userInfo,
+            });
+        } catch (error) {
+            res.send(error.message);
+        }
+    }
+
     return module;
 
 }
