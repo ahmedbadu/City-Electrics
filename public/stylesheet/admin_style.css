@@ -1,0 +1,63 @@
+.profile_display_section {
+    width: 100%;
+    height: auto;
+}
+
+.profile_display_section .profileImg {
+    width: 140px;
+    height: 140px;
+    border-radius: 100px;
+    border: 4px solid grey;
+    padding: 1px;
+}
+
+.profile_display_section h1 {
+    font-size: 26px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.profile_display_section .full_name_content {
+    font-size: 20px;
+    width: 100%;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.profile_display_section .email_content {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.profile_display_section .phone_content {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 18px;
+}
+
+.edit_profile_form_section {
+    width: 100%;
+    height: auto;
+}
+
+.edit_profile_form_section .edit_profile_heading {
+    font-size: 26px;
+    font-family: sans-serif;
+}
+
+.edit_profile_form_section .profile_preview{
+    width: 120px;
+    height: 120px;
+    border: 2px solid lightgrey;
+    margin-top: 10px;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.edit_profile_form_section .profile_preview img{
+    width: 100%;
+    height: 100%;
+}

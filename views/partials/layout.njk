@@ -4,7 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>CITY ELECTRICS || SUPER ADMIN PANEL</title>
+        <title>CITY ELECTRICS || {{ userInfo.user_type }} PANEL</title>
         <!-- plugins:css -->
         <link rel="stylesheet" href="/others/vendors/mdi/css/materialdesignicons.min.css">
         <link rel="stylesheet" href="/others/vendors/css/vendor.bundle.base.css">
@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="/others/css/style.css">
         <!-- End layout styles -->
         <link rel="shortcut icon" href="/others/images/favicon.ico">
+        <link rel="stylesheet" href="/stylesheet/admin_style.css">
     </head>
     <body>
         <div class="container-scroller">
@@ -57,5 +58,6 @@
         <!-- endinject -->
         <!-- Custom js for this page -->
         <!-- End custom js for this page -->
+         {% block script %}{% endblock %}
     </body>
 </html>

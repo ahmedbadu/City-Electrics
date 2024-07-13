@@ -96,6 +96,7 @@ module.exports = function (models) {
     module.profile = async function (req, res) {
         try {
             const userInfo = req.session.super_admin;
+            // console.log('SuperAdmin Session Details:-----' + userInfo.phone);
             res.render('backend/auth/profile.html', {
                 userInfo,
             });
