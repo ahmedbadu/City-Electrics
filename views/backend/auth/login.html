@@ -18,7 +18,7 @@
         <!-- End layout styles -->
         <link rel="shortcut icon" href="/others/images/favicon.ico">
     </head>
-    <body>
+    <body onload="checkStorage();">
         <div class="container-scroller">
             <div class="container-fluid page-body-wrapper full-page-wrapper">
                 <div class="content-wrapper d-flex align-items-center auth">
@@ -36,7 +36,7 @@
                                         <input
                                             type="email"
                                             class="form-control form-control-lg"
-                                            id="exampleInputEmail1"
+                                            id="email"
                                             name="email"
                                             placeholder="Email"
                                             required
@@ -46,7 +46,7 @@
                                         <input
                                             type="password"
                                             class="form-control form-control-lg"
-                                            id="exampleInputPassword1"
+                                            id="password"
                                             name="password"
                                             placeholder="Password"
                                             required
@@ -58,7 +58,12 @@
                                     <div class="my-2 d-flex justify-content-between align-items-center">
                                         <div class="form-check">
                                             <label class="form-check-label text-muted">
-                                                <input type="checkbox" class="form-check-input">
+                                                <input
+                                                    type="checkbox"
+                                                    id="chkRem"
+                                                    class="form-check-input"
+                                                    onclick="saveUser();"
+                                                >
                                                 Keep me signed in
                                             </label>
                                         </div>
@@ -84,5 +89,30 @@
         <script src="/others/js/hoverable-collapse.js"></script>
         <script src="/others/js/misc.js"></script>
         <!-- endinject -->
+        <script>
+            function saveUser(){
+                let rememberMe = document.getElementById('chkRem');
+                let email = document.getElementById('email').value;
+                let password = document.getElementById('password').value;
+                if(rememberMe.checked){
+                    localStorage.setItem('remember','checked');
+                    localStorage.setItem('email',email);
+                    localStorage.setItem('password',password);
+                }
+                else{
+                    localStorage.removeItem('remember');
+                    localStorage.removeItem('email');
+                    localStorage.removeItem('password');
+                }
+            }
+
+            function checkStorage(){
+                if(localStorage.getItem('remember')){
+                    document.getElementById('email').value = localStorage.getItem('email');
+                    document.getElementById('password').value = localStorage.getItem('password');
+                    document.getElementById('chkRem').setAttribute('checked','checked');
+                }
+            }
+        </script>
     </body>
 </html>

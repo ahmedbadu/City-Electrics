@@ -9,6 +9,7 @@ module.exports = function (app, models) {
     app.get(`${prefix}/signOut`, controller.authController.signOut);
     app.get(`${prefix}/profile`, middlewares.signInCheck.dashboardAccess, controller.authController.profile);
 
+    app.post(`${prefix}/editProfile/:id`, middlewares.signInCheck.dashboardAccess, controller.authController.editProfile);
     app.post(`${prefix}/checkUser`, controller.authController.signinCheck);
     app.post(`${prefix}/forgotPassword`, controller.authController.forgotPasswordPost);
 

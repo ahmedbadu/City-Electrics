@@ -105,6 +105,20 @@ module.exports = function (models) {
         }
     }
 
+    module.editProfile = async function (req, res) {
+        try {
+            const id = req.params.id;
+            const { first_name, last_name, email, phone } = req.body;
+            if(req.file && req.file.profile){
+                res.send('file uploaded');
+            }else{
+                res.send('file is not uploaded');
+            }
+        } catch (error) {
+            res.send(error.message);
+        }
+    }
+
     return module;
 
 }
