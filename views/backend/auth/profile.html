@@ -1,0 +1,133 @@
+{% extends 'partials/layout.njk' %}
+
+{% block body %}
+<div class="page-header">
+    <h3 class="page-title"> Manage Profile</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                {% if userInfo.user_type == 'super admin' %}
+                <a href="/superAdmin/dashboard" style="color: #323039;text-decoration: none;">Dashboard</a>
+                {% endif %}
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Manage Profile</li>
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="profile_display_section">
+                    <h1>View Profile</h1>
+                    <hr>
+                    <center>
+                        <img src="/images/user_images/{{ userInfo.profile }}" alt="User profile" class="profileImg">
+                    </center>
+                    <label class="full_name_content">{{ userInfo.first_name }} {{ userInfo.last_name }}</label>
+                    <label class="email_content">{{ userInfo.email }}</label>
+                    <label class="phone_content">+91 {{ userInfo.phone }}</label>
+                    {% if userInfo.user_type == 'super admin' %}
+                    <center>
+                        <a href="/superAdmin/signOut">
+                            <button class="btn btn-danger">Sign Out</button>
+                        </a>
+                    </center>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="edit_profile_form_section">
+                    <h1 class="edit_profile_heading">Edit Profile</h1>
+                    <hr>
+                    <form method="post" action="/superAdmin/editProfile/{{userInfo._id}}" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="first_name">First Name:</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="first_name"
+                                    name="first_name"
+                                    value="{{ userInfo.first_name }}"
+                                >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name">Last Name:</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="last_name"
+                                    name="last_name"
+                                    value="{{ userInfo.last_name }}"
+                                >
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="email">Email:</label>
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    value="{{ userInfo.email }}"
+                                >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone">Mobile No:</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="phone"
+                                    name="phone"
+                                    value="{{ userInfo.phone }}"
+                                >
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="Profile">Profile Image:</label>
+                                <input
+                                    type="file"
+                                    class="form-control"
+                                    id="Profile"
+                                    name="profile"
+                                    onchange="previewImage();"
+                                >
+                                <div class="profile_preview">
+                                    <img src="/images/user_images/{{ userInfo.profile }}" id="previewImageBlock" alt="preview Profile image">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button class="btn btn-success">Submit</button>
+                        <a class="btn btn-danger" onclick="history.back();">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function previewImage(){
+        var fileInput = document.getElementById('Profile').files[0];
+        if(fileInput){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                document.getElementById('previewImageBlock').setAttribute('src',e.target.result);
+            }
+            reader.readAsDataURL(fileInput);
+        }
+    }
+</script>
+{% endblock %}

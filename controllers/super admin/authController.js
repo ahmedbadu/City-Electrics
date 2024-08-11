@@ -93,6 +93,65 @@ module.exports = function (models) {
         }
     }
 
+    module.profile = async function (req, res) {
+        try {
+            const userInfo = req.session.super_admin;
+            // console.log('SuperAdmin Session Details:-----' + userInfo.phone);
+            res.render('backend/auth/profile.html', {
+                userInfo,
+            });
+        } catch (error) {
+            res.send(error.message);
+        }
+    }
+
+    module.editProfile = async function (req, res) {
+        try {
+            const id = req.params.id;
+            const { first_name, last_name, email, phone } = req.body;
+            if (req.file && req.file.filename) {
+                let updateProfile = await models.userModel.updateOne({ _id: id }, {
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    phone: phone,
+                    profile: req.file.filename,
+                });
+                if (updateProfile) {
+                    req.session.super_admin.first_name = first_name;
+                    req.session.super_admin.last_name = last_name;
+                    req.session.super_admin.email = email;
+                    req.session.super_admin.phone = phone;
+                    req.session.super_admin.profile = req.file.filename;
+                    res.send('<script>alert("Profile successfully updated");history.back();</script>');
+                }
+                else {
+                    res.send('<script>alert("Oops! Something went wrong!");history.back();</script>');
+                }
+            }
+            else {
+                let updateProfile = await models.userModel.updateOne({ _id: id }, {
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    phone: phone,
+                });
+                if (updateProfile) {
+                    req.session.super_admin.first_name = first_name;
+                    req.session.super_admin.last_name = last_name;
+                    req.session.super_admin.email = email;
+                    req.session.super_admin.phone = phone;
+                    res.send('<script>alert("Profile successfully updated");history.back();</script>');
+                }
+                else {
+                    res.send('<script>alert("Oops! Something went wrong!");history.back();</script>');
+                }
+            }
+        } catch (error) {
+            res.send(error.message);
+        }
+    }
+
     return module;
 
 }
