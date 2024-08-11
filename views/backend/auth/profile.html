@@ -44,7 +44,7 @@
                 <div class="edit_profile_form_section">
                     <h1 class="edit_profile_heading">Edit Profile</h1>
                     <hr>
-                    <form method="post" action="/superAdmin/editProfile/{{userInfo._id}}" enctype="application/x-www-form-urlencoded">
+                    <form method="post" action="/superAdmin/editProfile/{{userInfo._id}}" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="first_name">First Name:</label>
@@ -99,9 +99,10 @@
                                     class="form-control"
                                     id="Profile"
                                     name="profile"
+                                    onchange="previewImage();"
                                 >
                                 <div class="profile_preview">
-                                    <img src="/images/user_images/{{ userInfo.profile }}" alt="preview Profile image">
+                                    <img src="/images/user_images/{{ userInfo.profile }}" id="previewImageBlock" alt="preview Profile image">
                                 </div>
                             </div>
                         </div>
@@ -114,4 +115,19 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function previewImage(){
+        var fileInput = document.getElementById('Profile').files[0];
+        if(fileInput){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                document.getElementById('previewImageBlock').setAttribute('src',e.target.result);
+            }
+            reader.readAsDataURL(fileInput);
+        }
+    }
+</script>
 {% endblock %}
