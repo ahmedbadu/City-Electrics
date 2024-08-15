@@ -16,7 +16,7 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <div class="card">
+        <div class="card view_profile_card">
             <div class="card-body">
                 <div class="profile_display_section">
                     <h1>View Profile</h1>
@@ -44,7 +44,12 @@
                 <div class="edit_profile_form_section">
                     <h1 class="edit_profile_heading">Edit Profile</h1>
                     <hr>
-                    <form method="post" action="/superAdmin/editProfile/{{userInfo._id}}" enctype="multipart/form-data">
+                    <form
+                        id="profileEdit"
+                        method="post"
+                        action="/superAdmin/editProfile/{{userInfo._id}}"
+                        enctype="multipart/form-data"
+                    >
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="first_name">First Name:</label>
@@ -56,7 +61,7 @@
                                     value="{{ userInfo.first_name }}"
                                 >
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 last_name_field">
                                 <label for="last_name">Last Name:</label>
                                 <input
                                     type="text"
@@ -79,7 +84,7 @@
                                     value="{{ userInfo.email }}"
                                 >
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mobile_no_field">
                                 <label for="phone">Mobile No:</label>
                                 <input
                                     type="number"
@@ -129,5 +134,41 @@
             reader.readAsDataURL(fileInput);
         }
     }
+    $(document).ready(function(){
+        $('#profileEdit').validate({
+            rules:{
+                first_name:{
+                    required: true,
+                },
+                last_name:{
+                    required: true,
+                },
+                email:{
+                    required: true,
+                },
+                phone:{
+                    required: true,
+                    maxlength: 10,
+                    minlength: 10,
+                }
+            },
+            messages:{
+                first_name:{
+                    required: '*First Name is required',
+                },
+                last_name:{
+                    required: '*Last Name is required',
+                },
+                email:{
+                    required: '*Email is required',
+                },
+                phone:{
+                    required: '*Phone is required',
+                    maxlength: '*Phone must be 10 characters long',
+                    minlength: '*Phone must be 10 characters long',
+                }
+            }
+        });
+    });
 </script>
 {% endblock %}

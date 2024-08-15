@@ -24,6 +24,14 @@
                 let table = new DataTable('#stateTable');
             });
         </script>
+        <style>
+            .dataTables_length{
+                margin-bottom: 10px;
+            }
+            .dataTables_filter{
+                margin-bottom: 10px;
+            }
+        </style>
     </head>
     <body>
         <div class="container-scroller">
@@ -71,9 +79,11 @@
                                                     <td> {{ state.state_name }}</td>
                                                     <td> {{ state.created_date }}</td>
                                                     <td>
-                                                        <a href="editState/{{ state._id }}"><button type="button" class="btn btn-gradient-primary btn-rounded btn-icon">
-                                                            <span class="mdi mdi-tooltip-edit"></span>
-                                                        </button></a>
+                                                        <a href="editState/{{ state._id }}">
+                                                            <button type="button" class="btn btn-gradient-primary btn-rounded btn-icon">
+                                                                <span class="mdi mdi-tooltip-edit"></span>
+                                                            </button>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
