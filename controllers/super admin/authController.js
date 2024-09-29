@@ -152,6 +152,25 @@ module.exports = function (models) {
         }
     }
 
+    module.checkPassword = async function (req, res) {
+        try {
+            let password = req.body.currPass;
+            let oldPass = await models.userModel.findOne({ _id: req.session.super_admin._id });
+            if (!oldPass) {
+                return res.status(404).send("User not found.");
+            }
+            let checkpassword = await bcrypt.compare(password, oldPass.password);
+            if (checkpassword) {
+                return res.status(200).send("true");
+            }
+            else {
+                return res.status(401).send("false");
+            }
+        } catch (error) {
+            return res.status(500).send(error.message);
+        }
+    }
+
     return module;
 
 }

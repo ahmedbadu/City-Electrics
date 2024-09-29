@@ -118,6 +118,51 @@
                 </div>
             </div>
         </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="edit_profile_form_section">
+                    <h1 class="edit_profile_heading">Change Password</h1>
+                    <hr>
+                    <form id="changePassword" method="post" action="/superAdmin/changePass/{{userInfo._id}}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="currPass">Current Password:</label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="currPass"
+                                    name="currPass"
+                                >
+                            </div>
+                            <div class="col-md-6 last_name_field">
+                                <label for="newPass">New Password:</label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="newPass"
+                                    name="newPass"
+                                >
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="confirmPass">Confirm Password:</label>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    id="confirmPass"
+                                    name="confirmPass"
+                                >
+                            </div>
+                        </div>
+                        <br>
+                        <button class="btn btn-success">Change Password</button>
+                        <a class="btn btn-danger" onclick="history.back();">Back</a>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -169,6 +214,54 @@
                 }
             }
         });
+        $('#changePassword').validate({
+            rules:{
+                currPass: {
+                    required: true,
+                    remote: {
+                        url: "/superAdmin/checkPassword",
+                        type: "post",
+                        data: {
+                          currPass: function() {
+                            return $("#currPass").val();
+                          }
+                        },
+                        dataFilter: function(response) {
+                            // Parse the response from the server
+                            if (response === "false") {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                      }
+                },
+                newPass: {
+                    required: true,
+                },
+                confirmPass: {
+                    required: true,
+                    equalTo: "#newPass"
+                }
+            },
+            messages: {
+                currPass: {
+                    required: '*Current Password is required',
+                    remote: "*This Password is already taken"
+                },
+                newPass: {
+                    required: '*New Password is required',
+                },
+                confirmPass: {
+                    required: '*Confirm Password is required',
+                    equalTo: '*Password does not match',
+                }
+            },
+            submitHandler: function(form) {
+                // Form submission logic here
+                form.submit();
+            }
+        })
     });
 </script>
 {% endblock %}
